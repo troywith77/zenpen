@@ -166,6 +166,7 @@ ZenPen.ui = (function() {
 	}
 
 	function saveText( event ) {
+		console.log(saveFormat);
 
 		if (typeof saveFormat != 'undefined' && saveFormat != '') {
 			var blob = new Blob([textToWrite], {type: "text/plain;charset=utf-8"});
@@ -174,7 +175,14 @@ ZenPen.ui = (function() {
 			if (headerText === "") {
 			    headerText = "ZenPen";
 			}
-			saveAs(blob, headerText + '.txt');
+			switch(saveFormat) {
+			case "markdown":
+				saveAs(blob, headerText + '.md'); break;
+			case "html":
+				saveAs(blob, headerText + '.html'); break;
+			case "plain":
+				saveAs(blob, headerText + '.txt'); break;
+			}
 		} else {
 			document.querySelector('.saveoverlay h1').style.color = '#FC1E1E';
 		}
